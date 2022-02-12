@@ -4,7 +4,7 @@ import { Workout } from "../models/workout";
 
 
 export default class ActivityStore {
-  activityRegistry = new Map<string, Workout>();
+  workoutRegistry = new Map<string, Workout>();
   selectedActivity: Workout | undefined = undefined;
   editMode = false;
   loading = false;
@@ -14,25 +14,26 @@ export default class ActivityStore {
     // makeAutoObservable(this)
   }
 
-  // get activitiesByDate() {
-  //   return Array.from(this.activityRegistry.values()).sort((a, b) =>
-  //       Date.parse(a.date) - Date.parse(b.date));
-  // }
+  get getWorkouts() {
+    return Array.from(this.workoutRegistry.values());
+  }
 
-  // loadActivities= async () => {
-  //   this.loadingInitial =true;
-  //   try {
-  //     const activities = await agent.Activities.list();
-  //     activities.forEach((a=> {
-  //       this.setActivity(a);
-  //     }))
-  //     this.setLoadingInitital(false);
-  //   }
-  //   catch(error) {
-  //     console.log('error ', error);
-  //     this.setLoadingInitital(false);
-  //   }
-  // }
+  loadActivities= async () => {
+    this.loadingInitial =true;
+    try {
+      const activities = await agent.Workouts.list();
+      activities.forEach((a=> {
+       this.setActivity(a);
+       console.log(a);
+     }))
+      return activities;
+     // this.setLoadingInitital(false);
+    }
+    catch(error) {
+      console.log('error ', error);
+     // this.setLoadingInitital(false);
+    }
+  }
 
   // loadActivity = async (id: string) => {
   //   let activity = this.getActivity(id);
@@ -58,13 +59,13 @@ export default class ActivityStore {
   //   }
   // }
 
-  // private setActivity = (activity: Activity) => {
-  //   activity.date = activity.date.split('T')[0];
-  //   this.activityRegistry.set(activity.id, activity);
-  // }
+  private setActivity = (wo: Workout) => {
+  //  activity.date = activity.date.split('T')[0];
+    this.workoutRegistry.set(wo.id, wo);
+  }
 
   // private getActivity = (id: string) => {
-  //   return this.activityRegistry.get(id);
+  //   return this.workoutRegistry.get(id);
   // }
 
   // setLoadingInitital = (state: boolean) => {
@@ -77,7 +78,7 @@ export default class ActivityStore {
   //   try{
   //     await agent.Activities.create(activity);
   //     runInAction(() => {
-  //       this.activityRegistry.set(activity.id, activity);
+  //       this.workoutRegistry.set(activity.id, activity);
   //       this.selectedActivity = activity;
   //       this.editMode = false;
   //       this.loading = false;
@@ -96,7 +97,7 @@ export default class ActivityStore {
   //   try{
   //     await agent.Activities.update(activity);
   //     runInAction(() => {
-  //       this.activityRegistry.set(activity.id, activity);
+  //       this.workoutRegistry.set(activity.id, activity);
   //       this.selectedActivity = activity;
   //       this.editMode = false;
   //       this.loading = false;
@@ -115,7 +116,7 @@ export default class ActivityStore {
   //   try{
   //     await agent.Activities.delete(id);
   //     runInAction(() => {
-  //       this.activityRegistry.delete(id);
+  //       this.workoutRegistry.delete(id);
   //       this.loading = false;
   //     })
   //   }

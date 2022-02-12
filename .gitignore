@@ -20,6 +20,8 @@ client-react/components/*.js
 client-react.test/build
 !client-react.test/build/client-react/styles/
 
+*.suo
+*.user
 
 # IDE
 .idea/

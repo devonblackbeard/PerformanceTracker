@@ -1,5 +1,5 @@
-﻿// using Application.Workouts;
-// using Application.Core;
+﻿using Application.Core;
+using Application.UseCases;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +33,8 @@ namespace API.Extensions
                 });
             });
 
-            //services.AddMediatR(typeof(GetActivityList.Handler).Assembly);
-            //services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddMediatR(typeof(GetWorkoutList.Handler).Assembly);
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             return services;
         }
