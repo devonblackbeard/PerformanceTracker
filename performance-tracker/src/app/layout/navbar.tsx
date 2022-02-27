@@ -6,7 +6,7 @@ import { useStore } from '../stores/store'
 
 export default function NavBar() {
 
-  const {activityStore} = useStore();
+  const {workoutStore} = useStore();
   return (
     <Menu inverted fixed='top'>
       <Container>

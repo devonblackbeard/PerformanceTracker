@@ -30,7 +30,7 @@ const requests = {
 
 const Workouts = {
   list: () => requests.get<Workout[]>('/workouts'),
-  // details: (id: string) => requests.get<Workout>(`/activities/${id}`),
+  details: (id: string) => requests.get<Workout>(`/workouts/${id}`),
   // create: (workout: Workout) => requests.post<void>('/activities', workout),
   // update: (workout: Workout) => requests.put<void>(`/activities/${workout.id}`, workout),
   // delete: (id: string) => requests.delete<void>(`/activities/${id}`)

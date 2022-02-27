@@ -1,76 +1,73 @@
-// import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Workout } from "../models/workout";
 
 
-export default class ActivityStore {
+export default class WorkoutStore {
   workoutRegistry = new Map<string, Workout>();
-  selectedActivity: Workout | undefined = undefined;
+  selectedWorkout: Workout | undefined = undefined;
   editMode = false;
   loading = false;
   loadingInitial = true;
 
   constructor() {
-    // makeAutoObservable(this)
+    makeAutoObservable(this)
   }
 
   get getWorkouts() {
     return Array.from(this.workoutRegistry.values());
   }
 
-  loadActivities= async () => {
-    this.loadingInitial =true;
+  loadActivities = async () => {
+    this.loadingInitial = true;
     try {
       const activities = await agent.Workouts.list();
       activities.forEach((a=> {
-       this.setActivity(a);
-       console.log(a);
+       this.setWorkout(a);
      }))
-      return activities;
-     // this.setLoadingInitital(false);
+     this.setLoadingInitital(false);
+     return activities;
     }
     catch(error) {
       console.log('error ', error);
-     // this.setLoadingInitital(false);
+      this.setLoadingInitital(false);
     }
   }
 
-  // loadActivity = async (id: string) => {
-  //   let activity = this.getActivity(id);
-  //   if(activity){
-  //     this.selectedActivity = activity;
-  //     return activity;
-  //   }
-  //   else {
-  //     this.loadingInitial = true;
-  //     try{
-  //       activity = await agent.Activities.details(id);
-  //       this.setActivity(activity);
-  //       runInAction(() => {
-  //         this.selectedActivity = activity;
-  //       })
-  //       this.setLoadingInitital(false);
-  //       return activity;
-  //     }
-  //     catch (error){
-  //       console.log(error);
-  //       this.setLoadingInitital(false);
-  //     }
-  //   }
-  // }
-
-  private setActivity = (wo: Workout) => {
-  //  activity.date = activity.date.split('T')[0];
-    this.workoutRegistry.set(wo.id, wo);
+  loadWorkout = async (id: string) => {
+    let workout = this.getWorkout(id);
+    if(workout){
+      this.selectedWorkout = workout;
+      return workout;
+    }
+    else {
+      this.loadingInitial = true;
+      try{
+        workout = await agent.Workouts.details(id);
+        this.setWorkout(workout);
+        runInAction(() => {
+          this.selectedWorkout = workout;
+        })
+        this.setLoadingInitital(false);
+        return workout;
+      }
+      catch (error){
+        this.setLoadingInitital(false);
+      }
+    }
   }
 
-  // private getActivity = (id: string) => {
-  //   return this.workoutRegistry.get(id);
-  // }
+  private setWorkout = (wo: Workout) => {
+    this.workoutRegistry.set(String(wo.id), wo);
+  }
 
-  // setLoadingInitital = (state: boolean) => {
-  //   this.loadingInitial = state;
-  // }
+  private getWorkout = (id: string) => {
+    return this.workoutRegistry.get(id);
+  }
+
+  setLoadingInitital = (state: boolean) => {
+    this.loadingInitial = state;
+  }
 
   // createActivity = async(activity: Activity) => {
   //   this.loading = true;

@@ -5,6 +5,8 @@ import NavBar from './navbar';
 import HomePage from '../../features/home/HomePage';
 import Dashboard from '../../features/dashboard/Dashboard';
 import WorkoutForm from '../../features/form/WorkoutForm';
+import WorkoutDetails from '../../features/details/WorkoutDetails';
+import { observer } from 'mobx-react-lite';
 
 function App() {
   return (
@@ -15,10 +17,11 @@ function App() {
       <Route path='/' exact component={HomePage} />
       <Route exact path='/workouts' component={Dashboard} />
       <Route exact path='/createWorkout' component={WorkoutForm} />
+      <Route path='/workouts/:id' component={WorkoutDetails} />
 
     </Container>
   </>
   );
 }
 
-export default App;
+export default observer(App);

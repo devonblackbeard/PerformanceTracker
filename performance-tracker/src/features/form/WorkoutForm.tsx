@@ -1,10 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import { ChangeEvent, useState } from 'react';
 import { Button, Form, Segment } from 'semantic-ui-react';
 
-export default function WorkoutForm() {
-  console.log('in form');
-
-
+export default observer(function WorkoutForm() {
   const [workout, setWorkout] = useState({
     name:''
   });
@@ -30,4 +28,4 @@ export default function WorkoutForm() {
         </Form>
     </Segment>
   )
-}
+})

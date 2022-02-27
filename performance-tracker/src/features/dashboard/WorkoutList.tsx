@@ -1,22 +1,21 @@
 // import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 
 
-export default function WorkoutList() {
-  const {activityStore} = useStore();
+export default observer(function WorkoutList() {
+  const { workoutStore } = useStore();
   // const {deleteActivity, activitiesByDate, loading} = activityStore;
-  const { getWorkouts } = activityStore;
+  const { getWorkouts } = workoutStore;
   const [target, setTarget] = useState('');
 
   function handleWorkoutDelete(e: SyntheticEvent<HTMLButtonElement>, id:string) {
     setTarget(e.currentTarget.name);
   //  deleteActivity(id);
   }
-
-  console.log(getWorkouts);
 
   return (
       <Segment>
@@ -50,4 +49,4 @@ export default function WorkoutList() {
         </Item.Group>
       </Segment>
   )
-}
+})

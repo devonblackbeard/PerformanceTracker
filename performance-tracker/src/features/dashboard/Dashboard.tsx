@@ -2,14 +2,20 @@ import React, { useEffect } from 'react'
 import { Grid } from 'semantic-ui-react'
 import { useStore } from '../../app/stores/store'
 import WorkoutList from './WorkoutList';
+import LoadingComponent from '../../app/layout/LoadingComponents'
+import { observer } from 'mobx-react-lite'
 
 
-export default function Dashboard() {
-  const { activityStore } = useStore();
+export default observer(function Dashboard() {
+  const { workoutStore } = useStore();
 
   useEffect(() => {
-     activityStore.loadActivities();
-    }, [activityStore] )
+    workoutStore.loadActivities();
+    }, [workoutStore] )
+
+  if (workoutStore.loadingInitial){
+    return <LoadingComponent content='Loading App' />
+  }
 
 
   return (
@@ -25,4 +31,4 @@ export default function Dashboard() {
 
     </Grid>
   )
-}
+})
