@@ -16,8 +16,8 @@ function App() {
 
       <Route path='/' exact component={HomePage} />
       <Route exact path='/workouts' component={Dashboard} />
-      <Route exact path='/createWorkout' component={WorkoutForm} />
       <Route path='/workouts/:id' component={WorkoutDetails} />
+      <Route path={['/createWorkout', '/manage/:id']} component={WorkoutForm} />
 
     </Container>
   </>

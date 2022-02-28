@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Workout } from "../models/workout";
+import { WorkoutPayload } from "../models/workoutpayload";
 
 
 export default class WorkoutStore {
@@ -69,44 +70,47 @@ export default class WorkoutStore {
     this.loadingInitial = state;
   }
 
-  // createActivity = async(activity: Activity) => {
-  //   this.loading = true;
-  //   activity.id = uuid();
-  //   try{
-  //     await agent.Activities.create(activity);
-  //     runInAction(() => {
-  //       this.workoutRegistry.set(activity.id, activity);
-  //       this.selectedActivity = activity;
-  //       this.editMode = false;
-  //       this.loading = false;
-  //     })
-  //   }
-  //   catch(error){
-  //     runInAction(()=> {
-  //       this.loading = false;
-  //     })
-  //     console.log(error);
-  //   }
-  // }
+  createWorkout = async(workout: Workout) => {
+    this.loading = true;
+  //  workout.id = 0;
+    let payload: WorkoutPayload = {
+      id : 0,
+      name : workout.name
+    };
+    try{
+      await agent.Workouts.create(payload);
+      runInAction(() => {
+      //  this.workoutRegistry.set(workout.id, workout);
+      //  this.selectedWorkout = workout;
+        this.editMode = false;
+        this.loading = false;
+      })
+    }
+    catch(error){
+      runInAction(()=> {
+        this.loading = false;
+      })
+      console.log(error);
+    }
+  }
 
-  // updateActivity = async (activity: Activity) => {
-  //   this.loading = true;
-  //   try{
-  //     await agent.Activities.update(activity);
-  //     runInAction(() => {
-  //       this.workoutRegistry.set(activity.id, activity);
-  //       this.selectedActivity = activity;
-  //       this.editMode = false;
-  //       this.loading = false;
-  //     })
-  //   }
-  //   catch(error){
-  //     console.log(error);
-  //     runInAction(()=> {
-  //       this.loading = false;
-  //     })
-  //   }
-  // }
+  updateWorkout = async (workout: Workout) => {
+    this.loading = true;
+    try{
+      await agent.Workouts.update(workout);
+      runInAction(() => {
+        // this.workoutRegistry.set(workout.id, workout);
+        // this.selectedWorkout = workout;
+        // this.editMode = false;
+        // this.loading = false;
+      })
+    }
+    catch(error){
+      runInAction(()=> {
+        this.loading = false;
+      })
+    }
+  }
 
   // deleteActivity = async (id: string) => {
   //   this.loading = true;

@@ -17,6 +17,7 @@ export default observer(function WorkoutList() {
   //  deleteActivity(id);
   }
 
+  console.log('get: ', getWorkouts);
   return (
       <Segment>
         <h2>List</h2>
@@ -25,9 +26,7 @@ export default observer(function WorkoutList() {
             return <Item key={workout.id}>
                 <Item.Content>
                   <Item.Header as='a'>{workout.name}</Item.Header>
-
                   <Item.Description>
-
                   </Item.Description>
                   <Item.Extra>
                     <Button as={Link} to={`/workouts/${workout.id}`} floated='right' content='View' color='blue'/>
@@ -39,7 +38,6 @@ export default observer(function WorkoutList() {
                       content='Delete'
                       color='red'
                     />
-                    {/* <Label basic content={workout.category}/> */}
 
                   </Item.Extra>
                 </Item.Content>

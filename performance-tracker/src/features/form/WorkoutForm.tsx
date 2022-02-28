@@ -1,11 +1,24 @@
 import { observer } from 'mobx-react-lite';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button, Form, Segment } from 'semantic-ui-react';
+import { useStore } from '../../app/stores/store';
 
 export default observer(function WorkoutForm() {
+  const {workoutStore} = useStore();
+  const {selectedWorkout, loadWorkout, loadingInitial, loading, updateWorkout, createWorkout } = workoutStore;
+  const {id} = useParams<{id: string}>();
+
+
   const [workout, setWorkout] = useState({
-    name:''
+    id: '',
+    name: ''
   });
+
+
+  useEffect(()=> {
+    if(id) loadWorkout(id).then(workout => setWorkout(workout!));
+  }, [id, loadWorkout]);
 
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -14,8 +27,7 @@ export default observer(function WorkoutForm() {
   }
 
   function handleSubmit() {
-    // activity.id ? updateActivity(activity) : createActivity(activity);
-    console.log('on handle submit');
+    workout.id ? updateWorkout(workout) : createWorkout(workout);
   }
 
   return(

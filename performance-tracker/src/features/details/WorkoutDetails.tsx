@@ -34,7 +34,7 @@ export default observer(function WorkoutDetails() {
     </Card.Content>
     <Card.Content extra>
       <Button.Group widths='2'>
-        <Button as={Link} to={`/manage/${workout.id}`} basic color='blue' content='Edit'/>
+        <Button as={Link} to={`/manage/${workout.id}`} basic color='blue' content='Edit' />
         <Button as={Link} to='/workouts' basic color='grey' content='Cancel'/>
       </Button.Group>
     </Card.Content>
