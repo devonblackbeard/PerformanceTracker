@@ -20,7 +20,14 @@ namespace Persistence
                 },
                 new Workout
                 {
-                    Name = "Legs and Back"                   
+                    Name = "Legs and Back",
+                    Moves = new List<Move>
+                    {
+                        new Move
+                        {
+                            Name = "myLegMove"
+                        }
+                    }
                 },
 
             };

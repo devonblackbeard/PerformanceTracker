@@ -96,7 +96,7 @@ export default class WorkoutStore {
 
   updateWorkout = async (workout: Workout) => {
     this.loading = true;
-    try{
+    try {
       await agent.Workouts.update(workout);
       runInAction(() => {
         // this.workoutRegistry.set(workout.id, workout);

@@ -15,7 +15,7 @@ export default function NavBar() {
           Performance
         </Menu.Item>
         <Menu.Item as={NavLink} to='/workouts' name='Workouts'>
-          Workout
+          Workouts
         </Menu.Item>
         <Menu.Item>
           <Button as={NavLink} to='/createWorkout' positive content='Create Workout' />

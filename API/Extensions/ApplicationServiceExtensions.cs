@@ -33,6 +33,10 @@ namespace API.Extensions
                 });
             });
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddMediatR(typeof(GetWorkoutList.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
 

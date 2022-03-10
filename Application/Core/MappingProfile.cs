@@ -9,6 +9,7 @@ namespace Application.Core
         public MappingProfile()
         {
             CreateMap<Workout, Workout>();
+            CreateMap<Move, Move>();
         }
     }
 }

@@ -16,6 +16,12 @@ namespace API.Controllers
             return await Mediator.Send(new GetWorkoutList.Query(), ct);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Workout>> GetWorkoutById(int id, CancellationToken ct)
+        {
+            return await Mediator.Send(new GetWorkoutById.Query { Id = id }, ct);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateActivity(Workout workout)
         {

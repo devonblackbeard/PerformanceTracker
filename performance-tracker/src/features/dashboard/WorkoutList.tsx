@@ -12,15 +12,13 @@ export default observer(function WorkoutList() {
   const { getWorkouts } = workoutStore;
   const [target, setTarget] = useState('');
 
-  function handleWorkoutDelete(e: SyntheticEvent<HTMLButtonElement>, id:string) {
+  function handleWorkoutDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
     setTarget(e.currentTarget.name);
   //  deleteActivity(id);
   }
 
-  console.log('get: ', getWorkouts);
   return (
       <Segment>
-        <h2>List</h2>
         <Item.Group divided>
           {getWorkouts.map(workout => {
             return <Item key={workout.id}>
@@ -29,7 +27,6 @@ export default observer(function WorkoutList() {
                   <Item.Description>
                   </Item.Description>
                   <Item.Extra>
-                    <Button as={Link} to={`/workouts/${workout.id}`} floated='right' content='View' color='blue'/>
                     <Button
                       name={workout.id}
                       loading={target === workout.id}
@@ -37,6 +34,12 @@ export default observer(function WorkoutList() {
                       floated='right'
                       content='Delete'
                       color='red'
+                    />
+
+                    <Button as={Link} to={`/workouts/${workout.id}`}
+                     floated='right'
+                     content='View'
+                     color='blue'
                     />
 
                   </Item.Extra>

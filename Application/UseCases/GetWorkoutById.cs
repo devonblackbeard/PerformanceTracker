@@ -6,17 +6,18 @@ using Persistence;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Application.UseCases
 {
-    public class GetWorkoutList
+    public class GetWorkoutById
     {
-        public class Query : IRequest<List<Workout>>
+        public class Query : IRequest<Workout>
         {
-
+            public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, List<Workout>>
+        public class Handler : IRequestHandler<Query, Workout>
         {
             private readonly DataContext _context;
             private readonly ILogger<GetWorkoutList> _logger;
@@ -27,12 +28,12 @@ namespace Application.UseCases
                 _logger = logger;
             }
 
-            public async Task<List<Workout>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Workout> Handle(Query request, CancellationToken cancellationToken)
             {
                 var workouts = await _context.Workouts.Include("Moves").ToListAsync(cancellationToken);
-
-                //  await _context.Workouts.ToListAsync(cancellationToken);
-                return workouts;
+                var wo = workouts.Find(x => x.Id == request.Id);
+               
+                return wo;
             }
         }
     }
