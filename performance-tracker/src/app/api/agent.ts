@@ -32,7 +32,7 @@ const requests = {
 const Workouts = {
   list: () => requests.get<Workout[]>('/workouts'),
   details: (id: string) => requests.get<Workout>(`/workouts/${id}`),
-  create: (workout: WorkoutPayload) => {console.log(workout); requests.post<void>('/workouts', workout)},
+  create: (workout: WorkoutPayload) => {requests.post<void>('/workouts', workout)},
   update: (workout: Workout) => requests.put<void>(`/workouts/${workout.id}`, workout),
   // delete: (id: string) => requests.delete<void>(`/activities/${id}`)
 }

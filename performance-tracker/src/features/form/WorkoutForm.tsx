@@ -1,7 +1,9 @@
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Form, List, Segment } from 'semantic-ui-react';
+import { Button, Form, Input, List, Segment } from 'semantic-ui-react';
+import { Move } from '../../app/models/move';
 import { useStore } from '../../app/stores/store';
 
 export default observer(function WorkoutForm() {
@@ -13,38 +15,47 @@ export default observer(function WorkoutForm() {
   const [workout, setWorkout] = useState({
     id: '',
     name: '',
-    moves: [{ id: '', name: ''}]
+    moves: [{ id: 0, name: ''}]
   });
 
-  console.log('workout: ', workout);
+  const [newMove, setNewMove] = useState({
+    id: 0,
+    name: ''
+  });
+
 
   useEffect(()=> {
-    if(id) loadWorkout(id).then(workout => setWorkout(workout!));
+    if(id) loadWorkout(id).then(workout => setWorkout(workout!))
+    else{
+     setWorkout({id: '', name: '', moves: []});
+    };
   }, [id, loadWorkout]);
 
 
   function handleWorkoutNameChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    console.log('in handle input');
     const {name, value} = event.target;
-    var namex = event.target;
-    console.log(namex.value);
     setWorkout({...workout, [name]: value });
   }
 
-  function handleMovesInputChange(moveId: string, event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-  //  console.log('in handle moves input change');
-    const {name, value} = event.target;
-    var namex = event.target;
-    console.log(namex);
-   //   console.log(workout);
-    //setWorkout({...workout, [name]:value});
+  function handleMovesInputChange(moveId: number, name: string) {
+     runInAction(() => {
+        const move = workout.moves.find(w=> w.id === moveId);
+        if(move) move.name = name;
+     });
+     setWorkout({...workout});
+  }
 
-   // console.log(namex.value);
-    setWorkout({...workout, moves: [{ id: moveId, name: value}]  });
+  function handleNewMoveInputChange(newMoveName: any){
+    setNewMove({id: 0, name: newMoveName});
+  }
+
+  function handleAddMove() {
+    setWorkout({...workout, moves: [...workout.moves, newMove]  });
   }
 
   function handleSubmit() {
     console.log(workout);
+  //  workout.moves = workout.moves.filter(m => m.name !== '');
     workout.id ? updateWorkout(workout) : createWorkout(workout);
   }
 
@@ -52,15 +63,17 @@ export default observer(function WorkoutForm() {
     <Segment clearing>
         <Form onSubmit={handleSubmit} autoComplete='off' >
         Name
-        <Form.Input placeholder='Name' value={workout.name} name='name' onChange={handleWorkoutNameChange} />
+
+        <Form.Input value={workout.name} name='name' onChange={handleWorkoutNameChange} />
         Moves
 
-          {workout.moves.map((move: any) =>
-            <Form.Input key={move.id} value={move.name} name='move' onChange={e => handleMovesInputChange(move.id, e)} />
-          )}
-
-        {/* <Form.Input placeholder='Name' value={workout.move.name} name='move.name' onChange={handleInputChange} /> */}
-
+        <div>
+          <Input type="text" style={{width: 200}} onChange={e => handleNewMoveInputChange(e.target.value)} />
+          <Button positive content='Add' onClick={handleAddMove} type='button' />
+        </div>
+          {workout.moves.map((move: Move) =>
+            <Form.Input key={move.id} value={move.name} name='move' onChange={e => handleMovesInputChange(move.id, e.target.value)} />)
+          }
 
         <Button floated='right' positive type='submit' content='Submit' />
         <Button as={Link} to='/workouts' floated='right' type='button' content='Cancel' />
@@ -68,4 +81,7 @@ export default observer(function WorkoutForm() {
         </Form>
     </Segment>
   )
+
 })
+
+

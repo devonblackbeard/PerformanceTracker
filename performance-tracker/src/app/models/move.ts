@@ -1,4 +1,4 @@
 export interface Move {
-  id: string,
+  id: number,
   name: string
 }

@@ -22,12 +22,12 @@ export default class WorkoutStore {
   loadActivities = async () => {
     this.loadingInitial = true;
     try {
-      const activities = await agent.Workouts.list();
-      activities.forEach((a=> {
+      const workouts = await agent.Workouts.list();
+      workouts.forEach((a=> {
        this.setWorkout(a);
      }))
      this.setLoadingInitital(false);
-     return activities;
+     return workouts;
     }
     catch(error) {
       console.log('error ', error);
@@ -75,10 +75,11 @@ export default class WorkoutStore {
   //  workout.id = 0;
     let payload: WorkoutPayload = {
       id : 0,
-      name : workout.name
+      name : workout.name,
+      moves : workout.moves
     };
     try{
-      await agent.Workouts.create(payload);
+      agent.Workouts.create(payload);
       runInAction(() => {
       //  this.workoutRegistry.set(workout.id, workout);
       //  this.selectedWorkout = workout;
