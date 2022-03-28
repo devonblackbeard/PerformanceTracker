@@ -45,12 +45,15 @@ export default observer(function WorkoutForm() {
      setWorkout({...workout});
   }
 
-  function handleNewMoveInputChange(newMoveName: any){
+  function handleNewMoveInputChange(newMoveName: string){
     setNewMove({id: 0, name: newMoveName});
   }
 
-  function handleAddMove() {
+  function handleAddMove(event: any) {
     setWorkout({...workout, moves: [...workout.moves, newMove]  });
+    setNewMove({id: 0, name: ''});
+    console.log('new mvoe', newMove);
+
   }
 
   function handleSubmit() {
@@ -68,8 +71,8 @@ export default observer(function WorkoutForm() {
         Moves
 
         <div>
-          <Input type="text" style={{width: 200}} onChange={e => handleNewMoveInputChange(e.target.value)} />
-          <Button positive content='Add' onClick={handleAddMove} type='button' />
+          <Input type="text" value={newMove.name} style={{width: 200}} onChange={e => handleNewMoveInputChange(e.target.value)} />
+          <Button positive content='Add' onClick={e => handleAddMove(e)} type='button' />
         </div>
           {workout.moves.map((move: Move) =>
             <Form.Input key={move.id} value={move.name} name='move' onChange={e => handleMovesInputChange(move.id, e.target.value)} />)
