@@ -31,7 +31,6 @@ namespace Application.UseCases
             {
                 var workouts = await _context.Workouts.Include("Moves").ToListAsync(cancellationToken);
 
-                //  await _context.Workouts.ToListAsync(cancellationToken);
                 return workouts;
             }
         }

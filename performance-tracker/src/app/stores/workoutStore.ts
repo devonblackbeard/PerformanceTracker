@@ -72,7 +72,6 @@ export default class WorkoutStore {
 
   createWorkout = async(workout: Workout) => {
     this.loading = true;
-  //  workout.id = 0;
     let payload: WorkoutPayload = {
       id : 0,
       name : workout.name,
@@ -98,6 +97,8 @@ export default class WorkoutStore {
   updateWorkout = async (workout: Workout) => {
     this.loading = true;
     try {
+      console.log(workout)
+      
       await agent.Workouts.update(workout);
       runInAction(() => {
         // this.workoutRegistry.set(workout.id, workout);

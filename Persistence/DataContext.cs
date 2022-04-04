@@ -11,5 +11,7 @@ namespace Persistence
         }
 
         public DbSet<Workout> Workouts{ get; set; }
+        public DbSet<Move> Moves{ get; set; }
+
     }
 }

@@ -6,6 +6,7 @@ import { Button, Form, Input, List, Segment } from 'semantic-ui-react';
 import { Move } from '../../app/models/move';
 import { useStore } from '../../app/stores/store';
 
+
 export default observer(function WorkoutForm() {
   const {workoutStore} = useStore();
   const {selectedWorkout, loadWorkout, loadingInitial, loading, updateWorkout, createWorkout } = workoutStore;
@@ -46,19 +47,19 @@ export default observer(function WorkoutForm() {
   }
 
   function handleNewMoveInputChange(newMoveName: string){
-    setNewMove({id: 0, name: newMoveName});
+    const rand = Math.floor(Math.random() * 1000);
+
+    setNewMove({id: rand, name: newMoveName});
+    console.log(newMove);
   }
 
   function handleAddMove(event: any) {
     setWorkout({...workout, moves: [...workout.moves, newMove]  });
-    setNewMove({id: 0, name: ''});
+    setNewMove({id:0, name: ''});
     console.log('new mvoe', newMove);
-
   }
 
   function handleSubmit() {
-    console.log(workout);
-  //  workout.moves = workout.moves.filter(m => m.name !== '');
     workout.id ? updateWorkout(workout) : createWorkout(workout);
   }
 

@@ -11,5 +11,6 @@ namespace Domain
         public int Id { get; set; }
         public string Name { get; set; }
         public Workout Workout { get; set; }
+        public int WorkoutId { get; set; }
     }
 }

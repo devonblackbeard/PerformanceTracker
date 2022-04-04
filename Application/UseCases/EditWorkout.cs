@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Application.UseCases
 {
@@ -27,10 +29,29 @@ namespace Application.UseCases
 
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var workout = await _context.Workouts.FindAsync(request.Workout.Id);
+            {               
 
-                _mapper.Map(request.Workout, workout);
+                var moves = await _context.Moves.Select(m => m).ToListAsync();
+                var movesForThisWorkout = moves.Where(w => w.WorkoutId == request.Workout.Id).ToList();
+
+                var workoutA = await _context.Workouts.FindAsync(request.Workout.Id);
+                workoutA.Moves = movesForThisWorkout;
+
+
+
+                var commonMoves = workoutA.Moves.Select(m => m.Id).ToList().Intersect(request.Workout.Moves.Select(m => m.Id).ToList());
+                var newMoveIds = request.Workout.Moves.Select(m => m.Id).Except(commonMoves);
+
+                //// change ID to 0
+                foreach (var move in request.Workout.Moves)
+                {
+                    if (newMoveIds.Contains(move.Id))
+                    {
+                        move.Id = 0;
+                    }
+                }
+
+                _mapper.Map(request.Workout, workoutA);
 
                 await _context.SaveChangesAsync();
 
