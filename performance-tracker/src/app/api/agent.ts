@@ -34,6 +34,7 @@ const Workouts = {
   details: (id: string) => requests.get<Workout>(`/workouts/${id}`),
   create: (workout: WorkoutPayload) => {requests.post<void>('/workouts', workout)},
   update: (workout: Workout) => requests.put<void>(`/workouts/${workout.id}`, workout),
+
   // delete: (id: string) => requests.delete<void>(`/activities/${id}`)
 }
 

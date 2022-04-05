@@ -46,17 +46,21 @@ export default observer(function WorkoutForm() {
      setWorkout({...workout});
   }
 
-  function handleNewMoveInputChange(newMoveName: string){
-    const rand = Math.floor(Math.random() * 1000);
+  function handleNewMoveInputChange(newMoveName: string) {
+    setNewMove({id: 0, name: newMoveName});
+  }
 
-    setNewMove({id: rand, name: newMoveName});
-    console.log(newMove);
+  function getMaxId() {
+      const max = workout.moves.reduce((a, b) => b.id > a ? b.id : a, 0);
+      return max;
   }
 
   function handleAddMove(event: any) {
+    const maxId = getMaxId();
+    newMove.id = maxId + 1;
+
     setWorkout({...workout, moves: [...workout.moves, newMove]  });
     setNewMove({id:0, name: ''});
-    console.log('new mvoe', newMove);
   }
 
   function handleSubmit() {
