@@ -2,6 +2,7 @@
 using MediatR;
 using Persistence;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application.UseCases
@@ -24,6 +25,11 @@ namespace Application.UseCases
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+               foreach (var move in request.Workout.Moves)
+               {
+                    move.Id = 0;
+               }
+
                 _context.Workouts.Add(request.Workout);
                 await _context.SaveChangesAsync();
 

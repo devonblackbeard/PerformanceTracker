@@ -8,13 +8,14 @@ import { useStore } from '../../app/stores/store';
 
 export default observer(function WorkoutList() {
   const { workoutStore } = useStore();
-  // const {deleteActivity, activitiesByDate, loading} = activityStore;
+  const { deleteWorkout, loading} = workoutStore;
   const { getWorkouts } = workoutStore;
   const [target, setTarget] = useState('');
 
   function handleWorkoutDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+    console.log('delete workout');
     setTarget(e.currentTarget.name);
-  //  deleteActivity(id);
+    deleteWorkout(id);
   }
 
   return (

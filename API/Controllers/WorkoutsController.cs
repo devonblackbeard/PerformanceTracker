@@ -23,16 +23,22 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateActivity(Workout workout)
+        public async Task<IActionResult> CreateWorkout(Workout workout)
         {
             return Ok(await Mediator.Send(new CreateWorkout.Command { Workout = workout}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditActivity(int id, Workout workout)
+        public async Task<IActionResult> EditWorkout(int id, Workout workout)
         {
             workout.Id = id;
             return Ok(await Mediator.Send(new EditWorkout.Command { Workout = workout }));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWorkout(int id)
+        {
+            return Ok(await Mediator.Send(new DeleteWorkout.Command { Id = id }));
         }
 
 

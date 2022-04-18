@@ -38,17 +38,15 @@ namespace Application.UseCases
                 workoutA.Moves = movesForThisWorkout;
 
 
-
-                var commonMoves = workoutA.Moves.Select(m => m.Id).ToList().Intersect(request.Workout.Moves.Select(m => m.Id).ToList());
+                var commonMoves = workoutA.Moves.Select(m => m.Id).Intersect(request.Workout.Moves.Select(m => m.Id).ToList());
                 var newMoveIds = request.Workout.Moves.Select(m => m.Id).Except(commonMoves);
-
+                foreach (var move in
                 //// change ID to 0
-                foreach (var move in request.Workout.Moves)
+                from move in request.Workout.Moves
+                where newMoveIds.Contains(move.Id)
+                select move)
                 {
-                    if (newMoveIds.Contains(move.Id))
-                    {
-                        move.Id = 0;
-                    }
+                    move.Id = 0;
                 }
 
                 _mapper.Map(request.Workout, workoutA);

@@ -37,7 +37,7 @@ export default class WorkoutStore {
 
   loadWorkout = async (id: string) => {
     let workout = this.getWorkout(id);
-    if(workout){
+    if(workout) {
       this.selectedWorkout = workout;
       return workout;
     }
@@ -70,21 +70,24 @@ export default class WorkoutStore {
     this.loadingInitial = state;
   }
 
-  createWorkout = async(workout: Workout) => {
+  createWorkout = async (workout: Workout) => {
     this.loading = true;
+    this.loadingInitial = true;
     let payload: WorkoutPayload = {
       id : 0,
       name : workout.name,
       moves : workout.moves
     };
-    try{
-      agent.Workouts.create(payload);
+    try {
+      // console.log('loading ', this.loading);
+      await agent.Workouts.create(payload);
       runInAction(() => {
-      //  this.workoutRegistry.set(workout.id, workout);
-      //  this.selectedWorkout = workout;
+        //  this.workoutRegistry.set(workout.id, workout);
+        // this.selectedWorkout = workout;
         this.editMode = false;
         this.loading = false;
       })
+
     }
     catch(error){
       runInAction(()=> {
@@ -95,6 +98,7 @@ export default class WorkoutStore {
   }
 
   updateWorkout = async (workout: Workout) => {
+    console.log('update');
     this.loading = true;
     try {
       await agent.Workouts.update(workout);
@@ -102,7 +106,7 @@ export default class WorkoutStore {
         // this.workoutRegistry.set(workout.id, workout);
         // this.selectedWorkout = workout;
         // this.editMode = false;
-        // this.loading = false;
+        this.loading = false;
       })
     }
     catch(error){
@@ -112,23 +116,24 @@ export default class WorkoutStore {
     }
   }
 
-  // deleteActivity = async (id: string) => {
-  //   this.loading = true;
-  //   try{
-  //     await agent.Activities.delete(id);
-  //     runInAction(() => {
-  //       this.workoutRegistry.delete(id);
-  //       this.loading = false;
-  //     })
-  //   }
-  //   catch(error){
-  //     console.log(error);
-  //     runInAction(() => {
-  //       this.loading = false;
-  //     })
-  //   }
+  deleteWorkout = async (id: string) => {
+    this.loading = true;
+    try{
+      console.log('in try');
+      await agent.Workouts.delete(id);
+      // runInAction(() => {
+      //   this.workoutRegistry.delete(id);
+      //   this.loading = false;
+      // })
+    }
+    catch(error){
+      console.log(error);
+      runInAction(() => {
+        this.loading = false;
+      })
+    }
 
-  // }
+  }
 
 }
 

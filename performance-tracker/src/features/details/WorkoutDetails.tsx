@@ -17,7 +17,6 @@ export default observer(function WorkoutDetails() {
     if(id) loadWorkout(id);
   }, [id, loadWorkout])
 
-  // console.log(workout)
 
   if(loadingInitial || !workout) {
     return <LoadingComponent content={''} />;
@@ -29,12 +28,11 @@ export default observer(function WorkoutDetails() {
     <Card.Content>
       <Card.Header>{workout.name}</Card.Header>
       <Card.Meta>
-        {/* <span>{workout.date}</span> */}
 
         </Card.Meta>
         <List ordered>
           {workout.moves.map((move: any) =>
-            <List.Item key={move.id}>{move.name} </List.Item>
+            <List.Item key={move.id}>{move.name}</List.Item>
           )}
 
         </List>
