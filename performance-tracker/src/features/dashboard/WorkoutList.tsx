@@ -1,4 +1,3 @@
-// import { observer } from 'mobx-react-lite';
 import { observer } from 'mobx-react-lite';
 import { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +12,6 @@ export default observer(function WorkoutList() {
   const [target, setTarget] = useState('');
 
   function handleWorkoutDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-    console.log('delete workout');
     setTarget(e.currentTarget.name);
     deleteWorkout(id);
   }
@@ -30,7 +28,7 @@ export default observer(function WorkoutList() {
                   <Item.Extra>
                     <Button
                       name={workout.id}
-                      loading={target === workout.id}
+                      loading={loading && target === String(workout.id)}
                       onClick={(e) => handleWorkoutDelete(e, workout.id)}
                       floated='right'
                       content='Delete'

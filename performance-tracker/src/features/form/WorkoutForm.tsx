@@ -32,7 +32,7 @@ export default observer(function WorkoutForm() {
     };
   }, [id, loadWorkout]);
 
-  console.log('value of loading is', loading);
+  
   if(loading) {
     return <LoadingComponent content={''} />;
   }

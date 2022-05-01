@@ -19,7 +19,7 @@ export default class WorkoutStore {
     return Array.from(this.workoutRegistry.values());
   }
 
-  loadActivities = async () => {
+  loadWorkouts = async () => {
     this.loadingInitial = true;
     try {
       const workouts = await agent.Workouts.list();
@@ -79,11 +79,9 @@ export default class WorkoutStore {
       moves : workout.moves
     };
     try {
-      // console.log('loading ', this.loading);
       await agent.Workouts.create(payload);
       runInAction(() => {
-        //  this.workoutRegistry.set(workout.id, workout);
-        // this.selectedWorkout = workout;
+        this.selectedWorkout = workout;
         this.editMode = false;
         this.loading = false;
       })
@@ -98,14 +96,13 @@ export default class WorkoutStore {
   }
 
   updateWorkout = async (workout: Workout) => {
-    console.log('update');
     this.loading = true;
     try {
       await agent.Workouts.update(workout);
       runInAction(() => {
-        // this.workoutRegistry.set(workout.id, workout);
-        // this.selectedWorkout = workout;
-        // this.editMode = false;
+        this.workoutRegistry.set(String(workout.id), workout);
+        this.selectedWorkout = workout;
+        this.editMode = false;
         this.loading = false;
       })
     }
@@ -119,12 +116,12 @@ export default class WorkoutStore {
   deleteWorkout = async (id: string) => {
     this.loading = true;
     try{
-      console.log('in try');
       await agent.Workouts.delete(id);
-      // runInAction(() => {
-      //   this.workoutRegistry.delete(id);
-      //   this.loading = false;
-      // })
+      runInAction(() => {
+        console.log('id: ', id);
+        this.workoutRegistry.delete(String(id));
+        this.loading = false;
+    })
     }
     catch(error){
       console.log(error);
@@ -132,9 +129,7 @@ export default class WorkoutStore {
         this.loading = false;
       })
     }
-
   }
-
 }
 
 

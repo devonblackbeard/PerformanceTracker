@@ -10,12 +10,11 @@ export default observer(function Dashboard() {
   const { workoutStore } = useStore();
 
   useEffect(() => {
-    workoutStore.loadActivities();
+    workoutStore.loadWorkouts();
     }, [workoutStore])
 
-  if (workoutStore.loadingInitial){
-    return <LoadingComponent content='Loading App' />
-  }
+  if (workoutStore.loadingInitial) return <LoadingComponent content='Loading App' />
+
 
   return (
     <Grid>
