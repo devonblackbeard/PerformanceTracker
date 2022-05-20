@@ -22,7 +22,7 @@ export default observer(function WorkoutList() {
           {getWorkouts.map(workout => {
             return <Item key={workout.id}>
                 <Item.Content>
-                  <Item.Header as='a'>{workout.name}</Item.Header>
+                  <Item.Header as='a'>{workout.name} ({workout.moves.length})</Item.Header>
                   <Item.Description>
                   </Item.Description>
                   <Item.Extra>

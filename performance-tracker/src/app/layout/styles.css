@@ -1,7 +1,37 @@
 body {
-  background-color: #eaeaea !important;
+  background-color: #8b7b7b !important;
 }
 
 .ui.inverted.top.fixed.menu {
   background-image: linear-gradient(135deg, rgb(190, 68, 170) 0%, rgb(104, 51, 148) 69%, rgb(121, 64, 89) 89%) !important;;
+}
+
+.title{
+  color: white;
+}
+
+.calendar .react-calendar {
+  width: 700px;
+}
+
+.calendar abbr[title] {
+  text-decoration: underline;
+}
+
+
+.calendar .react-calendar__month-view__days__day--weekend {
+  color: black;
+}
+
+
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+
+.react-calendar__navigation {
+  background-color: #197f56;
 }

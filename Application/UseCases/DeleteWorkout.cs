@@ -39,8 +39,6 @@ namespace Application.UseCases
                     _context.Workouts.Remove(workout);
                 }
 
-                //_mapper.Map(request.Workout, workoutA);
-
                 await _context.SaveChangesAsync();
 
                 return Unit.Value;
