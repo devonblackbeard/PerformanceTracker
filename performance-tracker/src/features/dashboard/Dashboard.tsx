@@ -23,7 +23,6 @@ export default observer(function Dashboard() {
       </Grid.Column>
 
       <Grid.Column width='6'>
-
       </Grid.Column>
 
     </Grid>

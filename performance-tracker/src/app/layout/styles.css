@@ -11,7 +11,7 @@ body {
 }
 
 .calendar .react-calendar {
-  width: 700px;
+  width: 490px;
 }
 
 .calendar abbr[title] {
@@ -33,5 +33,25 @@ body {
 }
 
 .react-calendar__navigation {
-  background-color: #197f56;
+  background-color: white;
+}
+
+.topCalendar {
+  margin-left: 422px;
+}
+
+.flex {
+  display: flex;
+}
+
+.addWorkout {
+  margin: 26px;
+}
+
+.entry {
+  margin-top: 20px;
+}
+
+.workoutNameEntry {
+  width: 13%;
 }
